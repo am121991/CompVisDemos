@@ -14,6 +14,6 @@ img.show()
 # basic edge detection
 for x in range(img.size[0] - 1):
 	for y in range(img.size[1] - 1):
-		pixels[x,y] = 2*pixels[x,y] - pixels[x+1,y] - pixels[x,y+1]
+		pixels[x,y] = abs(2*pixels[x,y] - pixels[x+1,y] - pixels[x,y+1])
 
 img.show()
