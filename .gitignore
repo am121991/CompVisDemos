@@ -37,4 +37,4 @@ nosetests.xml
 
 # Vim stuff (Am)
 *.swp
-*.~
+*.*~
