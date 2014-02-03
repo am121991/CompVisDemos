@@ -1,7 +1,8 @@
 from PIL import Image
 from math import *
+from numpy import random
 
-oimg = Image.open("img74.gif")
+oimg = Image.open("lenna.png")
 img = oimg.convert('L') # convert to greyscale
 print("image size:", img.size)
 
@@ -33,15 +34,19 @@ def c2(r, r0):
 	return exp(-((r-r0)/t)**6)
 
 img2 = oimg.convert('L')
-img3 = oimg.convert('L')
 pixels2 = img2.load()
-pixels3 = img2.load()
+
+#for x in range(img2.size[0]):	#add noise
+#	for y in range(img2.size[1]):
+#		pixels2[x,y] += random.normal(0,5)
+#img2.show()
+
 
 t = 10 								#threshold
 r = 3.4 							#mask radius
-md = int(ceil(3.4*2)) #mask dimension
-n = [[0 for x in range(img2.size[1])] for x in range(img2.size[0])]	#output
-m = [[0 for x in range(md)] for x in range(md)]											#mask
+md = int(ceil(r*2)) #mask dimension
+n = [[0.0 for x in range(img2.size[1])] for x in range(img2.size[0])]	#output
+m = [[0.0 for x in range(md)] for x in range(md)]											#mask
 count = 0							#mask count
 
 for x in range(md):
@@ -51,7 +56,7 @@ for x in range(md):
 			count += 1
 	print m[x]
 
-g = 3*count/4 				#geometric threshold
+g = 3.0*count/4.0 				#geometric threshold
 print g, count
 
 for x in range(img2.size[0]):
@@ -61,7 +66,7 @@ for x in range(img2.size[0]):
 				xx = x-r+xr
 				yy = y-r+yr
 				if m[xr][yr] == 1 and xx>=0 and xx<img2.size[0] and yy>=0 and yy<img2.size[1]:
-					n[x][y] += c2(pixels[xx, yy], pixels[x,y])
+					n[x][y] += c2(pixels2[xx, yy], pixels2[x,y])
 
 for x in range(img2.size[0]):
 	for y in range(img2.size[1]):
@@ -72,8 +77,7 @@ for x in range(img2.size[0]):
 
 for x in range(img2.size[0]):
 	for y in range(img2.size[1]):
-		pixels2[x,y] = n[x][y] * 255/27
+		pixels2[x,y] = n[x][y] * 255/g
 
 img2.show()
-
 
