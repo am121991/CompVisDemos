@@ -1,0 +1,6 @@
+#
+# ELEC6024
+#
+[Talk]
+Name: Daniel Martinho-Corbishley and Amrinderjit Singh
+Title: Susan Edge Detection
