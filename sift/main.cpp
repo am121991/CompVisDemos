@@ -15,7 +15,15 @@ void readme();
 int main( int argc, char** argv )
 {
   //
-  Mat img_object = imread( "kitten.jpg" );
+  Mat img_object;
+  if (argc > 1){
+	  printf("img: %s\n", argv[1]);
+	  img_object = imread(argv[1]);
+  }
+  else {
+	  printf("default img\n");
+	  img_object = imread( "card2.png" );
+  }
   if( !img_object.data) { std::cout << " --(!) Error reading image " << std::endl; return -1; }
   
   VideoCapture cap(0);
